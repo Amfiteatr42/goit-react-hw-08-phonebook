@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Amfiteatr42/goit-react-hw-02-phonebook/static/css/main.7acaea2f.css",
+    "main.js": "/Amfiteatr42/goit-react-hw-02-phonebook/static/js/main.6aa7c6dd.js",
+    "index.html": "/Amfiteatr42/goit-react-hw-02-phonebook/index.html",
+    "main.7acaea2f.css.map": "/Amfiteatr42/goit-react-hw-02-phonebook/static/css/main.7acaea2f.css.map",
+    "main.6aa7c6dd.js.map": "/Amfiteatr42/goit-react-hw-02-phonebook/static/js/main.6aa7c6dd.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7acaea2f.css",
+    "static/js/main.6aa7c6dd.js"
+  ]
+}
