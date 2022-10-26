@@ -5,6 +5,7 @@ import { ContactsList } from "./ContactsList/ContactsList";
 import { Section } from './Section/Section'
 import { Filter } from './Filter/Filter'
 
+
 export class App extends Component {
   state = {
     contacts: [],

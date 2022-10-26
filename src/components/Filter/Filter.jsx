@@ -1,8 +1,13 @@
-export function Filter({filterByName, filterValue}) {
+import PropTypes from 'prop-types'
+import { Label, Input, Wrap } from "./Filter.styled";
+
+
+export function Filter({ filterByName, filterValue }) {
   return (
-    <label htmlFor="filter">
+    <Wrap>
+       <Label htmlFor="filter">
         Filter by Name
-        <input
+        <Input
           type="text"
           name="filter"
           onChange={filterByName}
@@ -11,6 +16,12 @@ export function Filter({filterByName, filterValue}) {
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
         />
-      </label>
+      </Label>
+    </Wrap>
   )
+}
+
+Filter.propTypes = {
+  filterByName: PropTypes.func.isRequired,
+  filterValue: PropTypes.string.isRequired,
 }
