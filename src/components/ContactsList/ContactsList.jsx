@@ -16,5 +16,10 @@ export function ContactsList({ contacts, deleteContact }) {
 }
 
 ContactsList.propTypes = {
-  contacts: PropTypes.arrayOf(PropTypes.string.isRequired,).isRequired,
+  contacts: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    number: PropTypes.string.isRequired,
+  }).isRequired,).isRequired,
+  deleteContact: PropTypes.func.isRequired,
 }

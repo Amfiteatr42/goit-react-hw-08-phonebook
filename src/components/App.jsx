@@ -12,12 +12,10 @@ export class App extends Component {
     filter: ''
   }
 
-  addContact = (e) => {
-    e.preventDefault()
-   
+  addContact = (name, number) => {
     const newContact = {
-      name: e.target.elements.name.value,
-      number: e.target.elements.number.value,
+      name,
+      number,
       id: nanoid(),
     }
 
