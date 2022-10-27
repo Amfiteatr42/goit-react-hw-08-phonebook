@@ -12,6 +12,16 @@ export class App extends Component {
     filter: ''
   }
 
+  componentDidMount = () => {
+    const savedContacts = JSON.parse(localStorage.getItem('contacts'))
+    if (savedContacts) {
+      this.setState({
+      contacts: savedContacts,
+    })
+    }
+  }
+  
+
   addContact = (name, number) => {
     const newContact = {
       name,
@@ -41,6 +51,12 @@ export class App extends Component {
     this.setState(prevState => ({
       contacts: prevState.contacts.filter(contact => contact.id !== id)
     }))
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts))
+    }
   }
   
   render() {
