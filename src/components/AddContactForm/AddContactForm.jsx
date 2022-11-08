@@ -1,51 +1,60 @@
-import PropTypes from 'prop-types'
-import { useState } from 'react'
-import {Form, Label, Input, Btn} from './AddContactForm.styled'
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from 'redux/contactsSlice';
+import { Form, Label, Input, Btn } from './AddContactForm.styled';
 
-
-export function AddContactForm({onAddContact}) {
-  const [name, setName] = useState('')
-  const [number, setNumber] = useState('')
+export function AddContactForm() {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+  const { contacts } = useSelector(state => state.contacts);
+  const dispatch = useDispatch();
 
   function onChange(e) {
     const { name, value } = e.target;
 
     switch (name) {
       case 'name':
-        setName(value)
+        setName(value);
         break;
       case 'number':
-        setNumber(value)
+        setNumber(value);
         break;
-      
+
       default:
         break;
     }
   }
 
   function onSubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
+    const isInContacts = contacts.find(contact => contact.name === name);
 
-    onAddContact(name, number)
-    reset()
+    if (isInContacts) {
+      alert(
+        'What are you doing, man? You already have this dude in your Phonebook!'
+      );
+      return;
+    }
+
+    dispatch(addContact(name, number));
+    reset();
   }
 
   function reset() {
     setName('');
-    setNumber('')
+    setNumber('');
   }
-
 
   return (
     <Form onSubmit={onSubmit}>
       <Label>
-         Name
+        Name
         <Input
           onChange={onChange}
           type="text"
           name="name"
           value={name}
-          placeholder='Alex Nichtverstehen'
+          placeholder="Alex Nichtverstehen"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
@@ -59,17 +68,13 @@ export function AddContactForm({onAddContact}) {
           type="tel"
           name="number"
           value={number}
-          placeholder='+380...'
+          placeholder="+380..."
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
         />
       </Label>
-        <Btn type="submit">Add Contact</Btn>
+      <Btn type="submit">Add Contact</Btn>
     </Form>
-  )
-}
-
-AddContactForm.propTypes = {
-  onAddContact: PropTypes.func.isRequired,
+  );
 }
