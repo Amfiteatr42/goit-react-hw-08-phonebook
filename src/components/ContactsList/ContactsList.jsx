@@ -4,7 +4,7 @@ import { Btn, ContactItem } from './ContactsList.styled';
 
 export function ContactsList() {
   const { contacts } = useSelector(state => state.contacts);
-  console.log(contacts);
+  console.log('contacts', contacts);
   const dispatch = useDispatch();
   const filterValue = useSelector(state => state.filter);
   const filteredContacts = contacts.filter(contact =>
