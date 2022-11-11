@@ -1,16 +1,17 @@
+import { useDispatch } from 'react-redux';
+import { getContacts } from 'redux/operations';
+import { useEffect } from 'react';
 import { AddContactForm } from './AddContactForm/AddContactForm';
 import { ContactsList } from './ContactsList/ContactsList';
 import { Section } from './Section/Section';
 import { Filter } from './Filter/Filter';
 
 export function App() {
-  // const [contacts, setContacts] = useState(
-  //   () => JSON.parse(localStorage.getItem('contacts')) ?? []
-  // );
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   localStorage.setItem('contacts', JSON.stringify(contacts));
-  // }, [contacts]);
+  useEffect(() => {
+    dispatch(getContacts());
+  }, [dispatch]);
 
   return (
     <div className="wrapper">
