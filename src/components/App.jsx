@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getContacts } from 'redux/operations';
-import { AddContactForm } from './AddContactForm/AddContactForm';
-import { ContactsList } from './ContactsList/ContactsList';
-import { Section } from './Section/Section';
-import { Filter } from './Filter/Filter';
+import { Route, Routes } from 'react-router-dom';
+import { getContacts } from 'redux/contacts/operations';
+import { AppBar } from './AppBar/AppBar';
+import { ContactsPage } from './pages/ContactsPage';
+import { LoginPage } from './pages/LoginPage';
+import { RegistryPage } from './pages/RegistryPage';
 
 export function App() {
   const dispatch = useDispatch();
@@ -14,14 +15,12 @@ export function App() {
   }, [dispatch]);
 
   return (
-    <div className="wrapper">
-      <Section title={'Phone Book'}>
-        <AddContactForm></AddContactForm>
-      </Section>
-      <Section title={'Contacts:'}>
-        <Filter></Filter>
-        <ContactsList></ContactsList>
-      </Section>
-    </div>
+    <Routes>
+      <Route path="/" element={<AppBar />}>
+        <Route path="registry" element={<RegistryPage />} />
+        <Route path="login" element={<LoginPage />} />
+        <Route path="contacts" element={<ContactsPage />} />
+      </Route>
+    </Routes>
   );
 }
