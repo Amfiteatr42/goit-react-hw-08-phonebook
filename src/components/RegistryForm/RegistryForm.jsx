@@ -1,28 +1,32 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { useDispatch } from 'react-redux';
+import { registry } from 'redux/authorization/auth-operations';
 import * as Yup from 'yup';
 
 export function RegistryForm() {
+  const dispatch = useDispatch();
+
   return (
     <div>
       <h2>Registry Form</h2>
       <Formik
-        initialValues={{ email: '', password: '', confirm: '' }}
+        initialValues={{ name: '', email: '', password: '', confirm: '' }}
         validationSchema={Yup.object().shape({
+          name: Yup.string().required('Required'),
           email: Yup.string().email().required('Required'),
-          password: Yup.string().min(
-            6,
-            'Password must be at least 6 characters long'
-          ),
-          confirm: Yup.string().oneOf(
-            [Yup.ref('password'), null],
-            'Your passwords are different, try harder!'
-          ),
+          password: Yup.string()
+            .required('Required')
+            .min(7, 'Password must be at least 7 characters long'),
+          confirm: Yup.string()
+            .required('Required')
+            .oneOf(
+              [Yup.ref('password'), null],
+              'Your passwords are different, try harder!'
+            ),
         })}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
+        onSubmit={({ name, email, password }, { resetForm }) => {
+          dispatch(registry({ name, email, password }));
+          resetForm();
         }}
       >
         {({
@@ -63,7 +67,7 @@ export function RegistryForm() {
           //     Submit
           //   </button>
           // </form>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <label htmlFor="name" style={{ display: 'block' }}>
               Name
             </label>
@@ -79,13 +83,23 @@ export function RegistryForm() {
             <label htmlFor="password" style={{ display: 'block' }}>
               Password
             </label>
-            <Field type="password" name="password" id="password" />
+            <Field
+              type="password"
+              name="password"
+              id="password"
+              value={values.password}
+            />
             <ErrorMessage name="password" component="div" />
 
             <label htmlFor="confirm" style={{ display: 'block' }}>
               Password again
             </label>
-            <Field type="password" name="confirm" id="confirm" />
+            <Field
+              type="password"
+              name="confirm"
+              id="confirm"
+              value={values.confirm}
+            />
             <ErrorMessage name="confirm" component="div" />
 
             <button type="submit" disabled={isSubmitting}>

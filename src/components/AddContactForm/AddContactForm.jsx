@@ -35,7 +35,7 @@ export function AddContactForm() {
       );
       return;
     }
-    dispatch(addContact({ name, phone: number }));
+    dispatch(addContact({ name, number }));
     reset();
   }
 

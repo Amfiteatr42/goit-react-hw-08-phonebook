@@ -30,11 +30,13 @@ const contactsSlice = createSlice({
       .addCase(getContacts.fulfilled, ({ contacts }, action) => {
         contacts.items = action.payload;
         contacts.isLoading = false;
+        contacts.error = null;
       })
       .addCase(addContact.pending, handlePending)
       .addCase(addContact.fulfilled, ({ contacts }, action) => {
         contacts.items.push(action.payload);
         contacts.isLoading = false;
+        contacts.error = null;
       })
       .addCase(deleteContact.pending, handlePending)
       .addCase(deleteContact.fulfilled, ({ contacts }, action) => {
@@ -43,6 +45,7 @@ const contactsSlice = createSlice({
         );
         contacts.items.splice(index, 1);
         contacts.isLoading = false;
+        contacts.error = null;
       })
       .addMatcher(
         isRejectedAction,

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
-import { getContacts } from 'redux/contacts/operations';
+import { refreshCurrentUser } from 'redux/authorization/auth-operations';
 import { AppBar } from './AppBar/AppBar';
 import { ContactsPage } from './pages/ContactsPage';
 import { LoginPage } from './pages/LoginPage';
@@ -11,7 +11,7 @@ export function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getContacts());
+    dispatch(refreshCurrentUser());
   }, [dispatch]);
 
   return (

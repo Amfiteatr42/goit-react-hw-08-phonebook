@@ -1,14 +1,20 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteContact } from 'redux/contacts/operations';
+import { deleteContact, getContacts } from 'redux/contacts/operations';
 import { getContactsState } from 'redux/contacts/selectors';
 import { Btn, ContactItem } from './ContactsList.styled';
 
 export function ContactsList() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getContacts());
+  }, [dispatch]);
+
   const {
     contacts: { items, isLoading, error },
     filter: filterValue,
   } = useSelector(getContactsState);
-  const dispatch = useDispatch();
   const filteredContacts = items.filter(contact =>
     contact.name.toLowerCase().includes(filterValue.toLowerCase())
   );
@@ -17,10 +23,10 @@ export function ContactsList() {
     <>
       {error && <div style={{ color: 'red', fontSize: '20px' }}>{error}</div>}
       <ul>
-        {filteredContacts.map(({ id, name, phone }) => {
+        {filteredContacts.map(({ id, name, number }) => {
           return (
             <ContactItem key={id}>
-              {name}: {phone}
+              {name}: {number}
               <Btn
                 type="button"
                 disabled={isLoading}

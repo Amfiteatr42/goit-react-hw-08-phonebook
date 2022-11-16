@@ -1,3 +1,4 @@
+import { UserMenu } from 'components/UserMenu/UserMenu';
 import { NavLink, Outlet } from 'react-router-dom';
 
 export function AppBar() {
@@ -10,6 +11,7 @@ export function AppBar() {
           <NavLink to={'login'}>Sign In</NavLink>
           <NavLink to={'contacts'}>Contacts</NavLink>
         </nav>
+        <UserMenu />
       </header>
       <Outlet />
     </>
