@@ -5,6 +5,7 @@ const initialState = {
   user: { name: null, email: null },
   token: null,
   isLoggedIn: false,
+  isRefreshingUser: false,
 };
 
 function handleLogin(state, { payload }) {
@@ -25,12 +26,17 @@ const authSlice = createSlice({
       .addCase(registry.fulfilled, handleLogin)
       .addCase(login.fulfilled, handleLogin)
       .addCase(logout.fulfilled, state => (state = { ...initialState }))
+      .addCase(refreshCurrentUser.pending, state => {
+        state.isRefreshingUser = true;
+      })
       .addCase(refreshCurrentUser.fulfilled, (state, { payload }) => {
         state.user = payload;
         state.isLoggedIn = true;
+        state.isRefreshingUser = false;
       })
-      .addMatcher(isRejectedAction, (_, action) => {
+      .addMatcher(isRejectedAction, (state, action) => {
         console.log('reject:', action.payload);
+        state.isRefreshingUser = false;
       });
   },
 });
