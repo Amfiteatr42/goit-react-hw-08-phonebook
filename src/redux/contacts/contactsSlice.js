@@ -51,7 +51,7 @@ const contactsSlice = createSlice({
         isRejectedAction,
         // `action` will be inferred as a RejectedAction due to isRejectedAction being defined as a type guard
         (state, action) => {
-          console.log('reject', action.payload);
+          console.log('reject:', action.payload);
           state.contacts.isLoading = false;
           state.contacts.error = action.payload;
         }

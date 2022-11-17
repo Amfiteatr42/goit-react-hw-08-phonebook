@@ -1,14 +1,22 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import {
+  Button,
+  ErrorMsg,
+  FormWrap,
+  Label,
+  StyledField,
+} from 'components/RegistryForm/RegistryForm.styled';
+import { Form, Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { login } from 'redux/authorization/auth-operations';
 import * as Yup from 'yup';
+import { LoginText } from './LoginForm.styled';
 
 export function LoginForm() {
   const dispatch = useDispatch();
 
   return (
-    <div>
+    <FormWrap>
       <h2>Sign In with your account</h2>
       <Formik
         initialValues={{ email: '', password: '', confirm: '' }}
@@ -16,10 +24,9 @@ export function LoginForm() {
           email: Yup.string()
             .email('Please enter valid e-mail')
             .required('E-mail is required'),
-          password: Yup.string().min(
-            6,
-            'Password must be at least 6 characters long'
-          ),
+          password: Yup.string()
+            .required('Password is forgotten. Why?')
+            .min(6, 'Password must be at least 6 characters long'),
         })}
         onSubmit={({ email, password }, { resetForm }) => {
           dispatch(login({ email, password }));
@@ -36,29 +43,39 @@ export function LoginForm() {
           isSubmitting,
         }) => (
           <Form>
-            <label htmlFor="email" style={{ display: 'block' }}>
+            <Label htmlFor="email" error={touched.email && errors.email}>
               Email
-            </label>
-            <Field type="email" name="email" id="email" value={values.email} />
-            <ErrorMessage name="email" component="div" />
+            </Label>
+            <StyledField
+              type="email"
+              name="email"
+              id="email"
+              value={values.email}
+            />
+            <ErrorMsg name="email" component="div" />
 
-            <label htmlFor="password" style={{ display: 'block' }}>
+            <Label
+              htmlFor="password"
+              error={touched.password && errors.password}
+            >
               Password
-            </label>
-            <Field type="password" name="password" id="password" />
-            <ErrorMessage name="password" component="div" />
+            </Label>
+            <StyledField type="password" name="password" id="password" />
+            <ErrorMsg name="password" component="div" />
 
-            <button type="submit" disabled={isSubmitting}>
+            <Button type="submit" disabled={isSubmitting}>
               Sign In
-            </button>
+            </Button>
           </Form>
         )}
       </Formik>
 
-      <p>
+      <LoginText>
         Don't have an account yet?{' '}
-        <NavLink to={'/registry'}>Click here!</NavLink>
-      </p>
-    </div>
+        <NavLink to={'/registry'} style={{ color: 'black', fontWeight: '600' }}>
+          Click here!
+        </NavLink>
+      </LoginText>
+    </FormWrap>
   );
 }

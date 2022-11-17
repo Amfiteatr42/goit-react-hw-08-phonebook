@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteContact, getContacts } from 'redux/contacts/operations';
 import { getContactsState } from 'redux/contacts/selectors';
-import { Btn, ContactItem } from './ContactsList.styled';
+import { Btn, CloseIcon, ContactItem, LoadIcon } from './ContactsList.styled';
 
 export function ContactsList() {
   const dispatch = useDispatch();
@@ -26,18 +26,19 @@ export function ContactsList() {
         {filteredContacts.map(({ id, name, number }) => {
           return (
             <ContactItem key={id}>
-              {name}: {number}
+              <p>
+                {name}: {number}
+              </p>
               <Btn
                 type="button"
                 disabled={isLoading}
                 onClick={() => dispatch(deleteContact(id))}
               >
-                {isLoading ? 'wait a sec' : 'Delete'}
+                {isLoading ? <LoadIcon /> : <CloseIcon />}
               </Btn>
             </ContactItem>
           );
         })}
-        {isLoading && <li>Updating...</li>}
       </ul>
     </>
   );

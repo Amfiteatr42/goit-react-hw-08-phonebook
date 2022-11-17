@@ -30,7 +30,7 @@ const authSlice = createSlice({
         state.isLoggedIn = true;
       })
       .addMatcher(isRejectedAction, (_, action) => {
-        console.log('reject', action.payload);
+        console.log('reject:', action.payload);
       });
   },
 });

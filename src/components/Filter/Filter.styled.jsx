@@ -1,18 +1,18 @@
-import styled from "styled-components";
+import styled from 'styled-components';
+import { Input } from 'components/AddContactForm/AddContactForm.styled';
 
 export const Label = styled.label`
   padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-`
+`;
 
-export const Input = styled.input`
+export const FilterInput = styled(Input)`
   margin-left: 15px;
-  padding: 6px;
-  border-radius: 3px;
-  border: 1px solid black;
-`
+  width: 60%;
+`;
 export const Wrap = styled.div`
-  width: 315px;
-`
+  width: 415px;
+  margin-bottom: 40px;
+`;

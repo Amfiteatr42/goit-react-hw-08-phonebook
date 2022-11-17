@@ -55,7 +55,8 @@ export const refreshCurrentUser = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const savedToken = thunkAPI.getState().auth.token;
-      if (!savedToken) return thunkAPI.rejectWithValue();
+      if (!savedToken)
+        return thunkAPI.rejectWithValue('no token saved in localstorage');
 
       token.set(savedToken);
       const { data } = await axios.get('/users/current');

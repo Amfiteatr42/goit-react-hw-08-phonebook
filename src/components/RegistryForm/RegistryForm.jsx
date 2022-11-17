@@ -1,24 +1,32 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { Title } from 'components/Welcome/Welcome.styled';
+import { Form, Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import { registry } from 'redux/authorization/auth-operations';
 import * as Yup from 'yup';
+import {
+  FormWrap,
+  Button,
+  StyledField,
+  Label,
+  ErrorMsg,
+} from './RegistryForm.styled';
 
 export function RegistryForm() {
   const dispatch = useDispatch();
 
   return (
-    <div>
-      <h2>Registry Form</h2>
+    <FormWrap>
+      <Title>Registry Form</Title>
       <Formik
         initialValues={{ name: '', email: '', password: '', confirm: '' }}
         validationSchema={Yup.object().shape({
-          name: Yup.string().required('Required'),
-          email: Yup.string().email().required('Required'),
+          name: Yup.string().required('*Required'),
+          email: Yup.string().email().required('*Required'),
           password: Yup.string()
-            .required('Required')
+            .required('*Required')
             .min(7, 'Password must be at least 7 characters long'),
           confirm: Yup.string()
-            .required('Required')
+            .required('*Required')
             .oneOf(
               [Yup.ref('password'), null],
               'Your passwords are different, try harder!'
@@ -68,46 +76,60 @@ export function RegistryForm() {
           //   </button>
           // </form>
           <Form onSubmit={handleSubmit}>
-            <label htmlFor="name" style={{ display: 'block' }}>
+            <Label htmlFor="name" error={touched.name && errors.name}>
               Name
-            </label>
-            <Field type="text" name="name" id="name" value={values.name} />
-            <ErrorMessage name="name" component="div" />
+            </Label>
+            <StyledField
+              required
+              type="text"
+              name="name"
+              id="name"
+              value={values.name}
+            />
+            <ErrorMsg name="name" component="div" />
 
-            <label htmlFor="email" style={{ display: 'block' }}>
+            <Label htmlFor="email" error={touched.email && errors.email}>
               Email
-            </label>
-            <Field type="email" name="email" id="email" value={values.email} />
-            <ErrorMessage name="email" component="div" />
+            </Label>
+            <StyledField
+              type="email"
+              name="email"
+              id="email"
+              value={values.email}
+            />
+            <ErrorMsg name="email" component="div" />
 
-            <label htmlFor="password" style={{ display: 'block' }}>
+            <Label
+              htmlFor="password"
+              error={touched.password && errors.password}
+            >
               Password
-            </label>
-            <Field
+            </Label>
+            <StyledField
               type="password"
               name="password"
               id="password"
               value={values.password}
             />
-            <ErrorMessage name="password" component="div" />
+            <ErrorMsg name="password" component="div" />
 
-            <label htmlFor="confirm" style={{ display: 'block' }}>
+            <Label htmlFor="confirm" error={touched.confirm && errors.confirm}>
               Password again
-            </label>
-            <Field
+            </Label>
+            <StyledField
               type="password"
               name="confirm"
               id="confirm"
               value={values.confirm}
             />
-            <ErrorMessage name="confirm" component="div" />
+            <ErrorMsg name="confirm" component="div" />
 
-            <button type="submit" disabled={isSubmitting}>
+            <Button type="submit" disabled={isSubmitting}>
               Registry
-            </button>
+            </Button>
           </Form>
         )}
       </Formik>
-    </div>
+    </FormWrap>
   );
 }
